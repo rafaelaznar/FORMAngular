@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="myFormApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>FORMAngular</title>
+    <link rel="shortcut icon" type="image/png" href="vitextbi.png" />
+</head>
+
+<body ng-controller="myFormController" style="margin-top: 20px;">
+
+    <div class="container" ng-cloak>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>FORMAngular</h2>
+                <p>Programa para aprender a validar de formularios en Angular</p>
+                <p>Basado en <a
+                        href="https://codepen.io/chrisoncode/pen/xFcdI">https://codepen.io/chrisoncode/pen/xFcdI</a></p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6">
+
+                <form name="userForm" ng-submit="submitForm()" novalidate>
+
+                    <div class="form-group row">
+                        <label>Nombre</label>
+                        <input type="text" name="nombre" class="form-control" ng-model="user.nombre"
+                            placeholder="Introduce tu nombre"
+                            ng-class="{ 'is-valid' : userForm.nombre.$valid && !userForm.nombre.$pristine, 'is-invalid' : userForm.nombre.$invalid && !userForm.nombre.$pristine }"
+                            ng-pattern="^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$" required>
+                        <div ng-show="userForm.nombre.$invalid && !userForm.nombre.$pristine" class="invalid-feedback">
+                            Por
+                            favor introduce un nombre válido.</div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label>Apellidos</label>
+                        <input type="text" name="apellidos" class="form-control" ng-model="user.apellidos"
+                            ng-class="{ 'is-valid' : userForm.apellidos.$invalid && !userForm.apellidos.$pristine }"
+                            placeholder="Introduce tus apellidos" ng-minlength="3" ng-maxlength="20"
+                            ng-pattern="^(?:[A-ZÄËÏÖÜÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙ][a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+(?:\s+[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+)+)$">
+                        <p ng-show="userForm.apellidos.$error.minlength" class="invalid-feedback">El apellido es
+                            demasiado
+                            corto.
+                        </p>
+                        <div ng-show="userForm.apellidos.$error.maxlength" class="invalid-feedback">El apellido es
+                            demasiado
+                            largo.
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" ng-model="user.email"
+                            ng-class="{ 'is-valid' : userForm.email.$invalid && !userForm.email.$pristine }"
+                            placeholder="Introduce tu email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/">
+                        <div ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="invalid-feedback">
+                            Introduce un email váido.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+
+
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <h4>Formulario</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.$valid, 'table-danger': userForm.$invalid }">
+                                        $valid / $invalid</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.$pristine, 'table-danger': !userForm.$pristine }">
+                                        $pristine / $dirty
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-class="{ 'table-success': userForm.$submitted }">$submitted</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <h4>Nombre</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.nombre.$valid, 'table-danger': userForm.nombre.$invalid }">
+                                        $valid / $invalid</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.nombre.$pristine, 'table-danger': !userForm.nombre.$pristine }">
+                                        $pristine / $dirty</td>
+                                </tr>
+                                <tr>
+                                    <td ng-class="{ 'table-success': userForm.nombre.$touched }">$touched / $untouched
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <h4>Apellidos</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.apellidos.$valid, 'table-danger': userForm.apellidos.$invalid }">
+                                        $valid / $invalid</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.apellidos.$pristine, 'table-danger': userForm.apellidos.$dirty }">
+                                        $pristine / $dirty</td>
+                                </tr>
+                                <tr>
+                                    <td ng-class="{ 'table-success': userForm.apellidos.$touched }">$touched /
+                                        $untouched
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <h4>Email</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.email.$valid, 'table-danger': userForm.email.$invalid }">
+                                        $valid / $invalid</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.email.$pristine, 'table-danger': userForm.email.$dirty }">
+                                        $pristine / $dirty</td>
+                                </tr>
+                                <tr>
+                                    <td ng-class="{ 'table-success': userForm.email.$touched }">$touched / $untouched
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <h4>Los campos input del formularios tienen las siguientes propiedades booleanas:</h4>
+                <ul>
+                    <li>$valid / $invalid - Indican si el contenido del campo es válido</li>
+                    <li>$pristine / $dirty - Indican si el campo ha sido modificado</li>
+                    <li>$touched / $untouched - Indican si el campo ha recibido el foco</li>
+                </ul>
+                <h4>Los formularios tienen las siguientes propiedades booleanas:</h4>
+                <ul>
+                    <li>$valid / $invalid - Indican si el contenido del formulario es válido</li>
+                    <li>$pristine / $dirty - Indican si el formulario ha sido modificado</li>
+                    <li>$submitted - Indica si el formulario ha sido enviado</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var myModule = angular.module("myFormApp", []);
+
+        var myController = myModule.controller("myFormController", [
+            "$scope",
+            function ($scope, $http) {
+                $scope.submitForm = function () {
+                    if ($scope.userForm.$valid) {
+                        alert('Formulario enviado!');
+                    } else {
+                        alert('El formulario tiene errores!');
+                    }
+                };
+            },
+        ]);
+    </script>
+
+</body>
+
+</html>
