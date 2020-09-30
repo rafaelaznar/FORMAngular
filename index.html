@@ -5,10 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon"
+        href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/4QAAAD/9wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABERERAAAAAAEiIiEAAAAAASIiIQAAAAABIiIhAAAAAAEiIiEREREQASIiIiIiIhABIiIiIiIiEAEiIiEREREQASIiIQAAAAABIiIhAAAAAAEiIiEREREQASIiIiIiIhABIiIiIiIiEAEREREREREQAAAAAAAAAAD//wAAgP8AAID/AACA/wAAgP8AAIABAACAAQAAgAEAAIABAACA/wAAgP8AAIABAACAAQAAgAEAAIABAAD//wAA" />
+
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <title>FORMAngular</title>
+
     <link rel="shortcut icon" type="image/png" href="vitextbi.png" />
 </head>
 
@@ -28,72 +34,100 @@
 
                 <form name="userForm" ng-submit="submitForm()" novalidate>
 
-                    <div class="form-group row">
-                        <label>Nombre</label>
+                    <div class="form-group form-row">
+                        <label>* Nombre</label>
                         <input type="text" name="nombre" class="form-control" ng-model="user.nombre"
                             placeholder="Introduce tu nombre"
                             ng-class="{ 'is-valid' : userForm.nombre.$valid && !userForm.nombre.$pristine, 'is-invalid' : userForm.nombre.$invalid && !userForm.nombre.$pristine }"
-                            ng-pattern="^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$" required>
-                        <div ng-show="userForm.nombre.$invalid && !userForm.nombre.$pristine" class="invalid-feedback">
+                            ng-pattern="/^[A-ZÁÉÍÓÚÀÈÒÜ][a-zñáéíóúàèòü]+(?: [A-ZÁÉÍÓÚÀÈÒÜ][a-zñáéíóúàèòü]+)*$/"
+                            ng-minlength="2" ng-maxlength="40" required>
+                        <div ng-show="userForm.nombre.$invalid && userForm.nombre.$dirty" class="invalid-feedback">
                             Por
-                            favor introduce un nombre válido.</div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label>Apellidos</label>
-                        <input type="text" name="apellidos" class="form-control" ng-model="user.apellidos"
-                            ng-class="{ 'is-valid' : userForm.apellidos.$invalid && !userForm.apellidos.$pristine }"
-                            placeholder="Introduce tus apellidos" ng-minlength="3" ng-maxlength="20"
-                            ng-pattern="^(?:[A-ZÄËÏÖÜÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙ][a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+(?:\s+[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+)+)$">
-                        <p ng-show="userForm.apellidos.$error.minlength" class="invalid-feedback">El apellido es
+                            favor introduce un nombre válido que empiece en mayúscula y cada parte tenga al menos dos
+                            letras.</div>
+                        <div ng-show="userForm.nombre.$error.minlength && userForm.nombre.$dirty"
+                            class="invalid-feedback">El nombre es
                             demasiado
                             corto.
-                        </p>
-                        <div ng-show="userForm.apellidos.$error.maxlength" class="invalid-feedback">El apellido es
+                        </div>
+                        <div ng-show="userForm.nombre.$error.maxlength && userForm.nombre.$dirty"
+                            class="invalid-feedback">El nombre es
                             demasiado
                             largo.
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label>Email</label>
-                        <input type="email" name="email" class="form-control" ng-model="user.email"
-                            ng-class="{ 'is-valid' : userForm.email.$invalid && !userForm.email.$pristine }"
-                            placeholder="Introduce tu email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/">
-                        <div ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="invalid-feedback">
-                            Introduce un email váido.</div>
+                    <div class="form-group form-row">
+                        <label>* Primer Apellido</label>
+                        <input type="text" name="apellido1" class="form-control" ng-model="user.apellido1"
+                            ng-class="{ 'is-valid' : userForm.apellido1.$invalid && !userForm.apellido1.$pristine , 'is-invalid' : userForm.apellido1.$invalid && !userForm.apellido1.$pristine }"
+                            placeholder="Introduce tu primer apellido" ng-minlength="2" ng-maxlength="40"
+                            ng-pattern="/^[A-ZÁÉÍÓÚÀÈÒÜ][a-zñáéíóúàèòü]+(?: [A-ZÁÉÍÓÚÀÈÒÜ][a-zñáéíóúàèòü]+)*$/"
+                            required>
+                        <div ng-show="userForm.apellido1.$invalid && userForm.apellido1.$dirty"
+                            class="invalid-feedback">
+                            Por
+                            favor introduce un apellido válido que empiece en mayúscula y cada parte tenga al menos dos
+                            letras.</div>
+                        <div ng-show="userForm.apellido1.$error.minlength && userForm.apellido1.$dirty"
+                            class="invalid-feedback">El apellido es
+                            demasiado
+                            corto.
+                        </div>
+                        <div ng-show="userForm.apellido1.$error.maxlength && userForm.apellido1.$dirty"
+                            class="invalid-feedback">El apellido es
+                            demasiado
+                            largo.
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+                    <div class="form-group form-row">
+                        <label>Segundo Apellido</label>
+                        <input type="text" name="apellido2" class="form-control" ng-model="user.apellido2"
+                            ng-class="{ 'is-valid' : userForm.apellido2.$invalid && !userForm.apellido2.$pristine , 'is-invalid' : userForm.apellido2.$invalid && !userForm.apellido2.$pristine }"
+                            placeholder="Introduce tu segundo apellido" ng-minlength="2" ng-maxlength="40"
+                            ng-pattern="/^[A-ZÁÉÍÓÚÀÈÒÜ][a-zñáéíóúàèòü]+(?: [A-ZÁÉÍÓÚÀÈÒÜ][a-zñáéíóúàèòü]+)*$/">
+                        <div ng-show="userForm.apellido2.$invalid && userForm.apellido2.$dirty"
+                            class="invalid-feedback">
+                            Por
+                            favor introduce un apellido válido que empiece en mayúscula y cada parte tenga al menos dos
+                            letras.</div>
+                        <div ng-show="userForm.apellido2.$error.minlength && userForm.apellido2.$dirty"
+                            class="invalid-feedback">El apellido es
+                            demasiado
+                            corto.
+                        </div>
+                        <div ng-show="userForm.apellido2.$error.maxlength && userForm.apellido2.$dirty"
+                            class="invalid-feedback">El apellido es
+                            demasiado
+                            largo.
+                        </div>
+                    </div>
 
+                    <div class="form-group form-row">
+                        <label>* Email</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                            <input type="text" name="email" class="form-control" ng-model="user.email"
+                                ng-class="{ 'is-valid' : userForm.email.$valid && userForm.email.$dirty, 'is-invalid' : userForm.email.$invalid && userForm.email.$dirty }"
+                                placeholder="Introduce tu email" ng-pattern="/\S+@\S+\.\S+/" required>
+                            <div ng-show="userForm.email.$invalid && userForm.email.$dirty" class="invalid-feedback">
+                                Introduce un email váido, el actual no es correcto.</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Enviar 1</button>
+                    <button type="submit" class="btn btn-primary">Enviar 2</button>
 
                 </form>
             </div>
         </div>
+
         <div class="row justify-content-center">
             <div class="col-6">
                 <div class="row">
-                    <div class="col">
-                        <h4>Formulario</h4>
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td
-                                        ng-class="{ 'table-success': userForm.$valid, 'table-danger': userForm.$invalid }">
-                                        $valid / $invalid</td>
-                                </tr>
-                                <tr>
-                                    <td
-                                        ng-class="{ 'table-success': userForm.$pristine, 'table-danger': !userForm.$pristine }">
-                                        $pristine / $dirty
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td ng-class="{ 'table-success': userForm.$submitted }">$submitted</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                     <div class="col">
                         <h4>Nombre</h4>
                         <table class="table table-bordered">
@@ -116,27 +150,50 @@
                         </table>
                     </div>
                     <div class="col">
-                        <h4>Apellidos</h4>
+                        <h4>Apellido1</h4>
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
                                     <td
-                                        ng-class="{ 'table-success': userForm.apellidos.$valid, 'table-danger': userForm.apellidos.$invalid }">
+                                        ng-class="{ 'table-success': userForm.apellido1.$valid, 'table-danger': userForm.apellido1.$invalid }">
                                         $valid / $invalid</td>
                                 </tr>
                                 <tr>
                                     <td
-                                        ng-class="{ 'table-success': userForm.apellidos.$pristine, 'table-danger': userForm.apellidos.$dirty }">
+                                        ng-class="{ 'table-success': userForm.apellido1.$pristine, 'table-danger': userForm.apellido1.$dirty }">
                                         $pristine / $dirty</td>
                                 </tr>
                                 <tr>
-                                    <td ng-class="{ 'table-success': userForm.apellidos.$touched }">$touched /
+                                    <td ng-class="{ 'table-success': userForm.apellido1.$touched }">$touched /
                                         $untouched
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div class="col">
+                        <h4>Apellido2</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.apellido2.$valid, 'table-danger': userForm.apellido2.$invalid }">
+                                        $valid / $invalid</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.apellido2.$pristine, 'table-danger': userForm.apellido2.$dirty }">
+                                        $pristine / $dirty</td>
+                                </tr>
+                                <tr>
+                                    <td ng-class="{ 'table-success': userForm.apellido2.$touched }">$touched /
+                                        $untouched
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div class="col">
                         <h4>Email</h4>
                         <table class="table table-bordered">
@@ -158,9 +215,66 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="col">
+                        <h4>Formulario</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.$valid, 'table-danger': userForm.$invalid }">
+                                        $valid / $invalid</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        ng-class="{ 'table-success': userForm.$pristine, 'table-danger': userForm.$dirty }">
+                                        $pristine / $dirty
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-class="{ 'table-success': userForm.$submitted }">$submitted</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Campo</th>
+                                    <th>variable $error</th>
+                                </tr>
+                                <tr>
+                                    <td>nombre</td>
+                                    <td>{{userForm.nombre.$error}}</td>
+                                </tr>
+                                <tr>
+                                    <td>primer apellido</td>
+                                    <td>{{userForm.apellido1.$error}}</td>
+                                </tr>
+                                <tr>
+                                    <td>segundo apellido</td>
+                                    <td>{{userForm.apellido2.$error}}</td>
+                                </tr>
+                                <tr>
+                                    <td>email</td>
+                                    <td>{{userForm.email.$error}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row justify-content-center">
             <div class="col-6">
                 <h4>Los campos input del formularios tienen las siguientes propiedades booleanas:</h4>
@@ -189,7 +303,21 @@
                     if ($scope.userForm.$valid) {
                         alert('Formulario enviado!');
                     } else {
-                        alert('El formulario tiene errores!');
+                        var mostrar = "";
+                        if ($scope.userForm.nombre.$invalid) {
+                            mostrar += "El nombre no es correcto";
+                        }
+                        if ($scope.userForm.apellido1.$invalid) {
+                            mostrar += "Hay un problema en el segundo apellido";
+                        }
+                        if ($scope.userForm.apellido2.$invalid) {
+                            mostrar += "Hay un problema en el primer apellido";
+                        }
+                        if ($scope.userForm.email.$invalid) {
+                            mostrar += "Hay un problema en el email";
+                        }
+                        alert('El formulario no se puede procesar porque contiene errores: ' +
+                            mostrar);
                     }
                 };
             },
